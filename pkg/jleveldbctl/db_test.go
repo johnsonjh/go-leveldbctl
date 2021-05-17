@@ -1,4 +1,4 @@
-package leveldbctl
+package jleveldbctl_test
 
 import (
 	"bytes"
@@ -207,5 +207,4 @@ func TestCheckingExistenceDB(t *testing.T) {
 	if err == nil {
 		t.Error("Init not check whether db is initialized")
 	}
-
 }

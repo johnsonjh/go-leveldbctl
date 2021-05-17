@@ -6,8 +6,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/johnsonjh/jleveldbctl/pkg/jleveldbctl"
 	"github.com/urfave/cli"
-	"github.com/yuuichi-fujioka/go-leveldbctl/pkg/leveldbctl"
 )
 
 func kvfmt(ishex bool, kvarg string) ([]byte, string) {
@@ -23,14 +23,14 @@ func kvfmt(ishex bool, kvarg string) ([]byte, string) {
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "leveldbctl"
+	app.Name = "jleveldbctl"
 
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:   "dbdir, d",
 			Value:  "./",
-			Usage:  "LevelDB Directory",
-			EnvVar: "LEVELDB_DIR",
+			Usage:  "JLevelDB Directory",
+			EnvVar: "JLEVELDB_DIR",
 		},
 		cli.BoolFlag{
 			Name:  "hexkey, xk",
@@ -46,22 +46,22 @@ func main() {
 		{
 			Name:    "init",
 			Aliases: []string{"i"},
-			Usage:   "Initialize a LevelDB",
+			Usage:   "Initialize a JLevelDB",
 			Action: func(c *cli.Context) error {
-				err := leveldbctl.Init(c.GlobalString("dbdir"))
+				err := jleveldbctl.Init(c.GlobalString("dbdir"))
 				if err != nil {
 					return err
 				}
-				fmt.Printf("%s is initialized as LevelDB\n", c.GlobalString("dbdir"))
+				fmt.Printf("%s is initialized as JLevelDB\n", c.GlobalString("dbdir"))
 				return nil
 			},
 		},
 		{
 			Name:    "walk",
 			Aliases: []string{"w"},
-			Usage:   "Walk in a LevelDB",
+			Usage:   "Walk in a JLevelDB",
 			Action: func(c *cli.Context) error {
-				err := leveldbctl.Walk(c.GlobalString("dbdir"), func(k, v string) {
+				err := jleveldbctl.Walk(c.GlobalString("dbdir"), func(k, v string) {
 					fmt.Printf("%s: %s\n", k, v)
 				})
 				return err
@@ -70,9 +70,9 @@ func main() {
 		{
 			Name:    "keys",
 			Aliases: []string{"k"},
-			Usage:   "Search all keys in a LevelDB",
+			Usage:   "Search all keys in a JLevelDB",
 			Action: func(c *cli.Context) error {
-				err := leveldbctl.Walk(c.GlobalString("dbdir"), func(k, _ string) {
+				err := jleveldbctl.Walk(c.GlobalString("dbdir"), func(k, _ string) {
 					fmt.Printf("%s\n", k)
 				})
 				return err
@@ -81,7 +81,7 @@ func main() {
 		{
 			Name:      "put",
 			Aliases:   []string{"p"},
-			Usage:     "Put a value into a LevelDB",
+			Usage:     "Put a value into a JLevelDB",
 			ArgsUsage: "key value",
 			Action: func(c *cli.Context) error {
 				if c.NArg() != 2 {
@@ -95,7 +95,7 @@ func main() {
 				}
 				key, kfmt := kvfmt(c.GlobalBool("xk"), c.Args()[0])
 				value, vfmt := kvfmt(c.GlobalBool("xv"), c.Args()[1])
-				err := leveldbctl.Put(c.GlobalString("dbdir"), key, value)
+				err := jleveldbctl.Put(c.GlobalString("dbdir"), key, value)
 				if err != nil {
 					return err
 				}
@@ -107,7 +107,7 @@ func main() {
 		{
 			Name:      "get",
 			Aliases:   []string{"g"},
-			Usage:     "Gut a value from a LevelDB",
+			Usage:     "Gut a value from a JLevelDB",
 			ArgsUsage: "key",
 			Action: func(c *cli.Context) error {
 				if c.NArg() != 1 {
@@ -120,7 +120,7 @@ func main() {
 					return cli.ShowSubcommandHelp(c)
 				}
 				key, _ := kvfmt(c.GlobalBool("xk"), c.Args()[0])
-				value, ok, err := leveldbctl.Get(c.GlobalString("dbdir"), key)
+				value, ok, err := jleveldbctl.Get(c.GlobalString("dbdir"), key)
 				if err != nil {
 					return err
 				}
@@ -135,7 +135,7 @@ func main() {
 		{
 			Name:      "delete",
 			Aliases:   []string{"d"},
-			Usage:     "Delete a value from a LevelDB",
+			Usage:     "Delete a value from a JLevelDB",
 			ArgsUsage: "key",
 			Action: func(c *cli.Context) error {
 				if c.NArg() != 1 {
@@ -148,7 +148,7 @@ func main() {
 					return cli.ShowSubcommandHelp(c)
 				}
 				key, kfmt := kvfmt(c.GlobalBool("xk"), c.Args()[0])
-				err := leveldbctl.Delete(c.GlobalString("dbdir"), key)
+				err := jleveldbctl.Delete(c.GlobalString("dbdir"), key)
 				if err != nil {
 					return err
 				}
@@ -160,7 +160,7 @@ func main() {
 		{
 			Name:      "search",
 			Aliases:   []string{"s"},
-			Usage:     "Search key prefix from a LevelDB",
+			Usage:     "Search key prefix from a JLevelDB",
 			ArgsUsage: "key",
 			Action: func(c *cli.Context) error {
 				if c.NArg() != 1 {
@@ -173,7 +173,7 @@ func main() {
 					return cli.ShowSubcommandHelp(c)
 				}
 				key, _ := kvfmt(c.GlobalBool("xk"), c.Args()[0])
-				value, ok, err := leveldbctl.Search(c.GlobalString("dbdir"), key)
+				value, ok, err := jleveldbctl.Search(c.GlobalString("dbdir"), key)
 				if err != nil {
 					return err
 				}

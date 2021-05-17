@@ -1,12 +1,12 @@
-package leveldbctl
+package jleveldbctl
 
 import (
 	"fmt"
 	"os"
 	"path"
 
-	leveldb "github.com/syndtr/goleveldb/leveldb"
-	util "github.com/syndtr/goleveldb/leveldb/util"
+	jleveldb "github.com/johnsonjh/jleveldb/leveldb"
+	util "github.com/johnsonjh/jleveldb/leveldb/util"
 )
 
 func dbexists(dbpath string) bool {
@@ -16,26 +16,26 @@ func dbexists(dbpath string) bool {
 
 func Init(dbpath string) error {
 	if dbexists(dbpath) {
-		return fmt.Errorf("%s was initialized as leveldb", dbpath)
+		return fmt.Errorf("%s was initialized as jleveldb", dbpath)
 	}
 
-	db, err := leveldb.OpenFile(dbpath, nil)
+	db, err := jleveldb.OpenFile(dbpath, nil)
 	if err != nil {
-		return fmt.Errorf("cannot open leveldb")
+		return fmt.Errorf("cannot open jleveldb")
 	}
 	defer db.Close()
 
 	return nil
 }
 
-func Put(dbpath string, key []byte, value []byte) error {
+func Put(dbpath string, key, value []byte) error {
 	if !dbexists(dbpath) {
-		return fmt.Errorf("%s is not leveldb", dbpath)
+		return fmt.Errorf("%s is not jleveldb", dbpath)
 	}
 
-	db, err := leveldb.OpenFile(dbpath, nil)
+	db, err := jleveldb.OpenFile(dbpath, nil)
 	if err != nil {
-		return fmt.Errorf("cannot open leveldb")
+		return fmt.Errorf("cannot open jleveldb")
 	}
 	defer db.Close()
 
@@ -45,18 +45,18 @@ func Put(dbpath string, key []byte, value []byte) error {
 
 func Get(dbpath string, key []byte) (string, bool, error) {
 	if !dbexists(dbpath) {
-		return "", false, fmt.Errorf("%s is not leveldb", dbpath)
+		return "", false, fmt.Errorf("%s is not jleveldb", dbpath)
 	}
 
-	db, err := leveldb.OpenFile(dbpath, nil)
+	db, err := jleveldb.OpenFile(dbpath, nil)
 	if err != nil {
-		return "", false, fmt.Errorf("cannot open leveldb")
+		return "", false, fmt.Errorf("cannot open jleveldb")
 	}
 	defer db.Close()
 
 	has, err := db.Has(key, nil)
 	if err != nil {
-		return "", false, fmt.Errorf("cannot open leveldb")
+		return "", false, fmt.Errorf("cannot open jleveldb")
 	}
 	if !has {
 		return "", false, nil
@@ -71,12 +71,12 @@ func Get(dbpath string, key []byte) (string, bool, error) {
 
 func Delete(dbpath string, key []byte) error {
 	if !dbexists(dbpath) {
-		return fmt.Errorf("%s is not leveldb", dbpath)
+		return fmt.Errorf("%s is not jleveldb", dbpath)
 	}
 
-	db, err := leveldb.OpenFile(dbpath, nil)
+	db, err := jleveldb.OpenFile(dbpath, nil)
 	if err != nil {
-		return fmt.Errorf("cannot open leveldb")
+		return fmt.Errorf("cannot open jleveldb")
 	}
 	defer db.Close()
 
@@ -86,18 +86,18 @@ func Delete(dbpath string, key []byte) error {
 
 func Walk(dbpath string, f func(string, string)) error {
 	if !dbexists(dbpath) {
-		return fmt.Errorf("%s is not leveldb", dbpath)
+		return fmt.Errorf("%s is not jleveldb", dbpath)
 	}
 
-	db, err := leveldb.OpenFile(dbpath, nil)
+	db, err := jleveldb.OpenFile(dbpath, nil)
 	if err != nil {
-		return fmt.Errorf("cannot open leveldb")
+		return fmt.Errorf("cannot open jleveldb")
 	}
 	defer db.Close()
 
 	s, err := db.GetSnapshot()
 	if err != nil {
-		return fmt.Errorf("cannot make snapshot leveldb")
+		return fmt.Errorf("cannot make snapshot jleveldb")
 	}
 	defer s.Release()
 
@@ -113,12 +113,12 @@ func Walk(dbpath string, f func(string, string)) error {
 
 func Search(dbpath string, key []byte) (string, bool, error) {
 	if !dbexists(dbpath) {
-		return "", false, fmt.Errorf("%s is not leveldb", dbpath)
+		return "", false, fmt.Errorf("%s is not jleveldb", dbpath)
 	}
 
-	db, err := leveldb.OpenFile(dbpath, nil)
+	db, err := jleveldb.OpenFile(dbpath, nil)
 	if err != nil {
-		return "", false, fmt.Errorf("cannot open leveldb")
+		return "", false, fmt.Errorf("cannot open jleveldb")
 	}
 	defer db.Close()
 

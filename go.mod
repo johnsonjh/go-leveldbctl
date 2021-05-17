@@ -1,11 +1,10 @@
-module github.com/yuuichi-fujioka/go-leveldbctl
+module github.com/johnsonjh/jleveldbctl
 
 go 1.14
 
 require (
-	github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db // indirect
-	github.com/onsi/ginkgo v1.7.0 // indirect
-	github.com/onsi/gomega v1.4.3 // indirect
-	github.com/syndtr/goleveldb v0.0.0-20180609010929-e2150783cd35
+	github.com/johnsonjh/jleveldb v0.0.0-20210516004249-a856207e02f2
+	github.com/johnsonjh/leaktestfe v0.0.0-20210514234952-29af0b6aaf93
 	github.com/urfave/cli v1.20.0
+	go.uber.org/goleak v1.1.11-0.20210512180611-4d57db33bc87
 )
