@@ -9,6 +9,6 @@ require (
 	github.com/johnsonjh/jleveldb v0.0.0-20210516004249-a856207e02f2
 	github.com/johnsonjh/leaktestfe v0.0.0-20210514234952-29af0b6aaf93
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
-	github.com/urfave/cli v1.22.2-0.20191024042601-850de854cda0
+	github.com/urfave/cli v1.22.5
 	go.uber.org/goleak v1.1.11-0.20210512180611-4d57db33bc87
 )
