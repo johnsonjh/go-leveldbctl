@@ -1,58 +1,47 @@
-# leveldbctl
+# jleveldbctl
 
-[![Build Status](https://travis-ci.org/yuuichi-fujioka/go-leveldbctl.svg?branch=master)](https://travis-ci.org/yuuichi-fujioka/go-leveldbctl)
-[![Coverage Status](https://coveralls.io/repos/github/yuuichi-fujioka/go-leveldbctl/badge.svg?branch=master)](https://coveralls.io/github/yuuichi-fujioka/go-leveldbctl?branch=master)
-
-LevelDB control command.
+JLevelDB control command.
 
 This command provides easy way to CRUD operation on LevelDB.
 
 ```sh
-$ leveldbctl put foo bar
+$ jleveldbctl put foo bar
 put foo: bar into ./.
-$ leveldbctl get foo
+$ jleveldbctl get foo
 bar
 ```
 
 ## Features
 
-* Initialize LevelDB
-* Put key/value into LevelDB
+* Initialize JLevelDB
+* Put key/value into JLevelDB
 * Get value with key
 * Delete key
-* Dump all key/values in LevelDB
+* Dump all key/values in JLevelDB
 * Print all keys
 
 ## Install
 
 ```sh
-$ export GO111MODULE=on
-$ go get github.com/yuuichi-fujioka/go-leveldbctl/cmd/leveldbctl
+$ go install -a -v github.com/johnsonjh/jleveldbctl/cmd/jleveldbctl
 ```
 
 ## Usage
 
 ```sh
-NAME:
-   leveldbctl - A new cli application
-
-USAGE:
-   leveldbctl [global options] command [command options] [arguments...]
-
-VERSION:
-   0.0.0
+jleveldbctl [global options] command [command options] [arguments...]
 
 COMMANDS:
-     init, i    Initialize a LevelDB
-     walk, w    Walk in a LevelDB
-     keys, k    Search all keys in a LevelDB
-     put, p     Put a value into a LevelDB
-     get, g     Gut a value from a LevelDB
-     delete, d  Delete a value from a LevelDB
+     init, i    Initialize a JLevelDB
+     walk, w    Walk in a JLevelDB
+     keys, k    Search all keys in a JLevelDB
+     put, p     Put a value into a JLevelDB
+     get, g     Gut a value from a JLevelDB
+     delete, d  Delete a value from a JLevelDB
      help, h    Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
-   --dbdir value, -d value  LevelDB Directory (default: "./") [$LEVELDB_DIR]
+   --dbdir value, -d value  JLevelDB Directory (default: "./") [$JLEVELDB_DIR]
    --hexkey, --xk           get / put hexadecimal keys
    --hexvalue, --xv         get / put hexadecimal values
    --help, -h               show help
@@ -62,7 +51,7 @@ GLOBAL OPTIONS:
 For hexadecimal keys and values:
 
 ```sh
-$ export LEVELDB_DIR=${HOME}/.bitcoin/index
+$ export JLEVELDB_DIR=${HOME}/.bitcoin/index
 $ leveldbctl -xk g 62f2a1f90489f1f74e441f325ec6f532df8286847d7c7a14000000000000000000|xxd -p
 89fe04a3db1d801d92188d350880fec55300008020edd4d15faba7c63dd7
 c83961bf6783a691fb8f5f6887120000000000000000009f413c1df7e296
