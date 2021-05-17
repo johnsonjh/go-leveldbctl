@@ -7,9 +7,12 @@ import (
 	"path"
 	"reflect"
 	"testing"
+	db "github.com/johnsonjh/jleveldbctl/pkg/jleveldbctl"
+	u "github.com/johnsonjh/leaktestfe"
 )
 
 func TestInit(t *testing.T) {
+	defer u.Leakplug(t)
 	tmpdir, err := ioutil.TempDir("", "test")
 	if err != nil {
 		t.Error(err)
@@ -19,7 +22,7 @@ func TestInit(t *testing.T) {
 	dbdir := path.Join(tmpdir, "init")
 
 	// init db
-	err = Init(dbdir)
+	err = db.Init(dbdir)
 	if err != nil {
 		t.Error(err)
 	}
@@ -31,6 +34,7 @@ func TestInit(t *testing.T) {
 }
 
 func TestCRUD(t *testing.T) {
+	defer u.Leakplug(t)
 	tmpdir, err := ioutil.TempDir("", "test")
 	if err != nil {
 		t.Error(err)
@@ -40,7 +44,7 @@ func TestCRUD(t *testing.T) {
 	dbdir := path.Join(tmpdir, "crud")
 
 	// init db
-	err = Init(dbdir)
+	err = db.Init(dbdir)
 	if err != nil {
 		t.Error(err)
 	}
@@ -51,7 +55,7 @@ func TestCRUD(t *testing.T) {
 	k2 := []byte("asdf2")
 
 	// get from blank db
-	value, ok, err := Get(dbdir, k)
+	value, ok, err := db.Get(dbdir, k)
 	if err != nil {
 		t.Error(err)
 	}
@@ -63,13 +67,13 @@ func TestCRUD(t *testing.T) {
 	}
 
 	// set a value with key
-	err = Put(dbdir, k, v)
+	err = db.Put(dbdir, k, v)
 	if err != nil {
 		t.Error(err)
 	}
 
 	// get with key
-	value, ok, err = Get(dbdir, k)
+	value, ok, err = db.Get(dbdir, k)
 	if err != nil {
 		t.Error(err)
 	}
@@ -81,7 +85,7 @@ func TestCRUD(t *testing.T) {
 	}
 
 	// get with unset key
-	value, ok, err = Get(dbdir, k2)
+	value, ok, err = db.Get(dbdir, k2)
 	if err != nil {
 		t.Error(err)
 	}
@@ -93,13 +97,13 @@ func TestCRUD(t *testing.T) {
 	}
 
 	// delete
-	err = Delete(dbdir, k)
+	err = db.Delete(dbdir, k)
 	if err != nil {
 		t.Error(err)
 	}
 
 	// key is deleted.
-	value, ok, err = Get(dbdir, k)
+	value, ok, err = db.Get(dbdir, k)
 	if err != nil {
 		t.Error(err)
 	}
@@ -112,6 +116,7 @@ func TestCRUD(t *testing.T) {
 }
 
 func TestWalk(t *testing.T) {
+	defer u.Leakplug(t)
 	tmpdir, err := ioutil.TempDir("", "test")
 	if err != nil {
 		t.Error(err)
@@ -121,7 +126,7 @@ func TestWalk(t *testing.T) {
 	dbdir := path.Join(tmpdir, "walk")
 
 	// initialize
-	err = Init(dbdir)
+	err = db.Init(dbdir)
 	if err != nil {
 		t.Error(err)
 	}
@@ -135,7 +140,7 @@ func TestWalk(t *testing.T) {
 
 	// set value
 	for k, v := range keyvalue {
-		err := Put(dbdir, []byte(k), []byte(v))
+		err := db.Put(dbdir, []byte(k), []byte(v))
 		if err != nil {
 			t.Error(err)
 		}
@@ -143,7 +148,7 @@ func TestWalk(t *testing.T) {
 
 	// walk
 	actual_keyvalue := map[string]string{}
-	err = Walk(dbdir, func(k, v string) {
+	err = db.Walk(dbdir, func(k, v string) {
 		actual_keyvalue[k] = v
 	})
 	if err != nil {
@@ -157,6 +162,7 @@ func TestWalk(t *testing.T) {
 }
 
 func TestCheckingExistenceDB(t *testing.T) {
+	defer u.Leakplug(t)
 	tmpdir, err := ioutil.TempDir("", "test")
 	if err != nil {
 		t.Error(err)
@@ -166,17 +172,17 @@ func TestCheckingExistenceDB(t *testing.T) {
 	dbdir := path.Join(tmpdir, "existence")
 
 	// Uninitialized Get, Delete, Put, Walk
-	err = Put(dbdir, []byte("k"), []byte("v"))
+	err = db.Put(dbdir, []byte("k"), []byte("v"))
 	if err == nil {
 		t.Error("Put not check whether db is initialized")
 	}
 
-	err = Delete(dbdir, []byte("k"))
+	err = db.Delete(dbdir, []byte("k"))
 	if err == nil {
 		t.Error("Delete not check whether db is initialized")
 	}
 
-	value, ok, err := Get(dbdir, []byte("k"))
+	value, ok, err := db.Get(dbdir, []byte("k"))
 	if err == nil {
 		t.Error("Get not check whether db is initialized")
 	}
@@ -189,7 +195,7 @@ func TestCheckingExistenceDB(t *testing.T) {
 		t.Error("Get is returing wrong value that 'value' should be blank string")
 	}
 
-	err = Walk(dbdir, func(k, v string) {
+	err = db.Walk(dbdir, func(k, v string) {
 		t.Error("handling functions should be called when db is not initialized")
 	})
 	if err == nil {
@@ -197,13 +203,13 @@ func TestCheckingExistenceDB(t *testing.T) {
 	}
 
 	// Initialized DB with init
-	err = Init(dbdir)
+	err = db.Init(dbdir)
 	if err != nil {
 		t.Error(err)
 	}
 
 	// Check
-	err = Init(dbdir)
+	err = db.Init(dbdir)
 	if err == nil {
 		t.Error("Init not check whether db is initialized")
 	}
