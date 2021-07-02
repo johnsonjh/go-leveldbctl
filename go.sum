@@ -28,8 +28,8 @@ github.com/google/go-cmp v0.3.1/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMyw
 github.com/google/go-cmp v0.4.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
-github.com/johnsonjh/jleveldb v0.0.0-20210701141223-38f06a829cfe h1:H8G86wkH6rr8lZ1Ojf/m6Oj3c4ckXVrKzhg6GZDpDCs=
-github.com/johnsonjh/jleveldb v0.0.0-20210701141223-38f06a829cfe/go.mod h1:wocK+BiJpmKdmuPa9UH9rLhawrmzWLOuAvmv3axaMAI=
+github.com/johnsonjh/jleveldb v0.0.0-20210702040017-b2eb6edf51e5 h1:G7p6TYu/wfi19njjQg+I0JT6HiDyOWWgIzQfLKgXLw4=
+github.com/johnsonjh/jleveldb v0.0.0-20210702040017-b2eb6edf51e5/go.mod h1:X9pcdaOoIh3BW0lXqfnxwL+QC32CGZU/vLxrHMB24HA=
 github.com/johnsonjh/leaktestfe v0.0.0-20210629212503-a92ef2d4610c h1:ApnRZsq3UXAZgCJYVJoEewBVqxdxe5sX1PtGbD8VPlU=
 github.com/johnsonjh/leaktestfe v0.0.0-20210629212503-a92ef2d4610c/go.mod h1:glmn3kd9uKq4RX6zOiBGxAC7Ru594q5kguoxZGfdcFM=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
