@@ -3,7 +3,7 @@ module github.com/johnsonjh/jleveldbctl
 go 1.17
 
 require (
-	github.com/johnsonjh/jleveldb v0.0.0-20230324011404-cf64bb86aa49
+	github.com/johnsonjh/jleveldb 2c7d963c2560
 	github.com/johnsonjh/leaktestfe v0.0.0-20230308203709-32b9101894df
 	github.com/urfave/cli v1.22.12
 	github.com/urfave/cli/v2 v2.25.0
